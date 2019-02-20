@@ -1,0 +1,20 @@
+I=imread('33.png');
+B=rgb2gray(I);
+bw=imbinarize(B);
+%figure,imshow(bw)
+bw1=bwareaopen(bw,50);
+%figure,imshow(bw1)
+subplot(2,2,1);
+imshow(bw)
+subplot(2,2,2);
+imshow(bw1)
+cc=bwconncomp(bw1,4)
+alpha=false(size(bw1));
+alpha(cc.PixelIdxList{14})=true;
+subplot(2,2,3);
+imshow(alpha)
+for i=1:cc.NumObjects
+    alpha(cc.PixelIdxList{i})=true;
+end
+subplot(2,2,4);
+imshow(alpha)
