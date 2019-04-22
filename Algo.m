@@ -1,6 +1,6 @@
 temp= zeros(9,9);
-I=imread('Alphabets.png');
-[m,n]= size(I);
+I=imread('bangla.jpeg');
+[m,n,c]= size(I);
 figure,imshow(I);
 if size(I,3)==3 % RGB image
  I=rgb2gray(I);
@@ -8,7 +8,11 @@ if size(I,3)==3 % RGB image
 end
 figure,imshow(I);
 E = edge(I);
-figure,imshow(E); 
+figure,imshow(E);
+%n=432;
+count1=zeros(m,n);
+count0=zeros(m,n);
+final=zeros(m,n);
 for i = 1 : m
     for j = 1 : n
         if(E(i,j)==1)
@@ -27,10 +31,28 @@ for i = 1 : m
                 end
                 x=x+1;
             end
-            image(temp);
+            %image(temp);
             temp=im2bw(temp);
-            figure,image(temp)
+            %image(temp)
+            for k=1:9
+                for l=1:9
+                    if(temp(k,l)>=1)
+                        count1(i,j)=count1(i,j)+1;
+                    else
+                        count0(i,j)=count0(i,j)+1;
+                    end
+                end
+            end
         end
     end
 end
-
+for i = 1 : m
+    for j = 1 : n
+        if(count1(i,j)>count0(i,j))
+            final(i,j)=1;
+        else
+            final(i,j)=0;
+        end
+    end
+end
+figure,image(final);
